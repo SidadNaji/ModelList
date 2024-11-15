@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Model Viewer</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer@latest/dist/model-viewer.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6e85b7, #b8c6db);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        h1 {
+            margin: 20px;
+            color: #f5f5f5;
+        }
+        model-viewer {
+            width: 450px;
+            height: 450px;
+            margin: 20px auto;
+            border: 3px solid #ffffff;
+            border-radius: 10px;
+            background: cornsilk;
+        }
+        .slider {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .slide {
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .slide:hover {
+            transform: scale(1.1);
+        }
+        .slide.selected {
+            border-color: #f1c40f;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Interactive 3D Model Viewer</h1>
+
+<model-viewer 
+    id="viewer" 
+    src="3d_models/model1.glb" 
+    alt="3D Model" 
+    shadow-intensity="1" 
+    camera-controls 
+    auto-rotate 
+    ar>
+</model-viewer>
+
+<div class="slider">
+    <div class="slide selected" 
+        onclick="switchModel(this, 'model1')" 
+        style="background-image: url('3d_models/model1.jpg');">
+    </div>
+    <div class="slide" 
+        onclick="switchModel(this, 'model2')" 
+        style="background-image: url('3d_models/model2.jpg');">
+    </div>
+    <div class="slide" 
+        onclick="switchModel(this, 'model3')" 
+        style="background-image: url('3d_models/model3.jpg');">
+    </div>
+</div>
+
+<script>
+    function switchModel(element, modelName) {
+        // Deselect all slides
+        document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('selected'));
+
+        // Select the current slide
+        element.classList.add('selected');
+
+        // Update the model-viewer source
+        const viewer = document.getElementById('viewer');
+        viewer.src = `3d_models/${modelName}.glb`;
+    }
+</script>
+
+</body>
+</html>
